@@ -1,0 +1,78 @@
+/* =========================
+   RESET GLOBAL
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f2f4f8;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* =========================
+   LISTA CLIENTE
+========================= */
+#lista {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+/* =========================
+   CARD PRODUTO CLIENTE
+========================= */
+.produto {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: 0.2s ease;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.produto:hover {
+  transform: translateY(-6px);
+}
+
+/* imagem */
+.produto img {
+  width: 100%;
+  height: 190px;
+  object-fit: contain;
+  background: #f7f7f7;
+  padding: 12px;
+}
+
+/* conteúdo */
+.produto-content {
+  padding: 14px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.produto-content h3,
+.produto-content p {
+  margin: 0;
+}
+
+/* preço destaque */
+.produto p:first-of-type {
+  color: #2ecc71;
+  font-weight: bold;
+}

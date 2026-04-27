@@ -1,0 +1,173 @@
+/* =========================
+   1. RESET E CONFIGURAÇÃO
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f0f4f8; /* Fundo leve e profissional */
+  color: #334155;
+  padding: 40px 20px;
+}
+
+/* Título da Página */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   2. FORMULÁRIO DE CADASTRO
+========================= */
+form {
+  background: #ffffff;
+  max-width: 450px;
+  margin: 0 auto 60px auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+form h2 {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+form button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   3. GRID DE PRODUTOS
+========================= */
+#lista {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* =========================
+   4. CARD DO PRODUTO (O CORAÇÃO DO DESIGN)
+========================= */
+.produto {
+  background: #ffffff;
+  border-radius: 20px; /* Bordas arredondadas como na foto */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.produto:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagem Nítida */
+.produto img {
+  width: 100%;
+  height: 220px; /* Altura fixa para alinhar todos os cards */
+  object-fit: cover; /* Faz a imagem preencher sem esticar */
+  background-color: #f8fafc;
+}
+
+/* Conteúdo Centralizado (Nome, Preço, Descrição) */
+.produto-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente no flex */
+  text-align: center;  /* Centraliza as linhas de texto */
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.produto-content h3 {
+  font-size: 1.2rem;
+  color: #1e293b;
+  font-weight: 700;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* Estilo para o Preço */
+.produto-content .preco, 
+.produto-content p:nth-of-type(1) { 
+  font-size: 1.3rem;
+  color: #10b981; /* Verde esmeralda nítido */
+  font-weight: 800;
+}
+
+/* Estilo para a Descrição */
+.produto-content .descricao,
+.produto-content p:nth-of-type(2) {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* Botão Excluir (Estilo Soft Red da foto) */
+.btn-delete {
+  margin: 0 20px 20px 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background-color: #fee2e2; /* Fundo rosa/vermelho claro */
+  color: #ef4444; /* Texto vermelho vivo */
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #ef4444; /* Fica vermelho forte no hover */
+  color: #ffffff;
+  transform: scale(1.03);
+}
