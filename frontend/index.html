@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/adimin.css">
     <title>Cadastro</title>
 </head>
+
 <body class="admin">
 
-<form id="form">
-    <input id="nome" placeholder="Nome" required>
-    <input id="valor" type="number" placeholder="Valor" required>
-    <input id="descri" placeholder="Descrição">
-    <input id="Imagem" type="file">
-    <button>Cadastrar</button>
-</form>
+    <form id="form">
+        <input id="nome" placeholder="Nome" required>
+        <input id="valor" type="number" placeholder="Valor" required>
+        <input id="descri" placeholder="Descrição">
+        <label for="imagem" class="file-upload">
+            <span>📷 Clique para enviar imagem</span>
+            <input type="file" id="imagem">
+        </label>
+        <div id="preview-container">
+            <img id="preview-img" src="" alt="Preview da imagem">
+        </div>
+        <button>Cadastrar</button>
+    </form>
 
-<section id="lista"></section>
+    <section id="lista"></section>
 
-<script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>

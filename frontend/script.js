@@ -44,7 +44,7 @@ form.addEventListener('submit', async (e) => {
   formData.append('preco', document.getElementById('valor').value)
   formData.append('descricao', document.getElementById('descri').value)
 
-  const file = document.getElementById('Imagem').files[0]
+  const file = document.getElementById('imagem').files[0]
   if (file) {
     formData.append('imagem', file)
   }
@@ -65,5 +65,23 @@ async function deletar(id) {
 
   carregarProdutos()
 }
+
+const inputImagem = document.getElementById('imagem')
+const preview = document.getElementById('preview-img')
+const container = document.getElementById('preview-container')
+const texto = document.getElementById('upload-text')
+
+inputImagem.addEventListener('change', () => {
+  const file = inputImagem.files[0]
+
+  if (!file) return
+
+  const url = URL.createObjectURL(file)
+
+  preview.src = url
+  container.style.display = 'block'
+
+  texto.textContent = `📁 ${file.name}`
+})
 
 carregarProdutos()
