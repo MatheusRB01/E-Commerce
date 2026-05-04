@@ -154,7 +154,7 @@ CREATE TABLE Users (
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Seu Nome**
+Desenvolvido por Matheus Romano Bonfim
 
 ---
 
