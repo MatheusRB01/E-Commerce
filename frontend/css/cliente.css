@@ -76,3 +76,83 @@ body {
   color: #2ecc71;
   font-weight: bold;
 }
+
+/* =========================
+MENU SUPERIOR SIMPLES
+========================= */
+.top-menu {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 10px 20px;
+}
+
+/* BOTÃO SAIR */
+.top-menu a {
+  text-decoration: none;
+  font-size: 13px;
+
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  color: #ef4444;
+  transition: 0.2s ease;
+}
+
+/* hover suave */
+.top-menu a:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+/* =========================
+TOPO (CLIENTE)
+========================= */
+.top-bar {
+  width: 100%;
+  background: rgb(255, 215, 0);
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 25px;
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* TÍTULO */
+.top-bar h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* BOTÃO SAIR */
+.logout {
+  text-decoration: none;
+  font-size: 13px;
+
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  color: #ef4444;
+  transition: 0.2s;
+}
+
+.logout:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* AJUSTE DA LISTA */
+#lista {
+  margin-top: 10px;
+}

@@ -134,4 +134,6 @@ inputImagem.addEventListener('change', () => {
   texto.textContent = `📁 ${file.name}`
 })
 
+
+
 carregarProdutos()

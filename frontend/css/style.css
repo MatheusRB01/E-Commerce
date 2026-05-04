@@ -1,0 +1,174 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+}
+
+/* Container geral com fade */
+.container {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Caixa de login */
+.login-box {
+  background: #fff;
+  width: 320px;
+  padding: 40px;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+
+  /* animação estilo "subindo" */
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slideUp 0.8s ease forwards;
+}
+
+/* Título */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #262626;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  background: #fafafa;
+  transition: 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #a8a8a8;
+  background: #fff;
+}
+
+/* Botão */
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #0095f6;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #007cd1;
+  transform: scale(1.03);
+}
+
+/* ANIMAÇÕES */
+@keyframes slideUp {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================
+LINK CRIAR CONTA
+========================= */
+/* =========================
+BASE (COMPARTILHADO)
+========================= */
+.login-link,
+.register-link {
+  display: inline-block;
+  margin-top: 15px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-decoration: none;
+  position: relative;
+
+  transition: color 0.2s ease;
+}
+
+/* =========================
+LOGIN LINK
+========================= */
+.login-link {
+  color: #10b981;
+}
+
+.login-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+
+  width: 0%;
+  height: 2px;
+
+  background-color: #10b981;
+  transition: width 0.25s ease;
+}
+
+.login-link:hover {
+  color: #059669;
+}
+
+.login-link:hover::after {
+  width: 100%;
+}
+
+/* =========================
+REGISTER LINK
+========================= */
+.register-link {
+  color: #3b82f6;
+}
+
+.register-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+
+  width: 0%;
+  height: 2px;
+
+  background-color: #3b82f6;
+  transition: width 0.25s ease;
+}
+
+.register-link:hover {
+  color: #2563eb;
+}
+
+.register-link:hover::after {
+  width: 100%;
+}
