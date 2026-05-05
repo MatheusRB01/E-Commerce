@@ -172,3 +172,91 @@ REGISTER LINK
 .register-link:hover::after {
   width: 100%;
 }
+
+
+body {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.4s ease;
+}
+
+/* quando carregou */
+body.loaded {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* quando está saindo */
+body.fade-out {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ESTRUTURA PRINCIPAL */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial;
+  background: #fafafa;
+}
+
+/* NAVBAR (topo fixo visualmente) */
+.navbar {
+  width: 100%;
+  background: #ffda08;
+  color: rgb(0, 0, 0);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 40px;
+}
+
+/* CONTEÚDO (MEIO) */
+.main {
+  flex: 1; /* ESSA LINHA É O SEGREDO */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CAIXA DO FORM */
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+/* FOOTER (embaixo SEM quebrar layout) */
+.footer {
+  width: 100%;
+  background: #ffda08;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 15px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}

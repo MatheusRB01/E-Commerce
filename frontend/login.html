@@ -1,23 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+  <meta charset="UTF-8">
   <title>Login</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-  <div class="container">
-    <h2>Login</h2>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <h2>E-Commerce</h2>
+    <div class="nav-links">
+      <a href="login.html">Login</a>
+      <a href="register.html">Cadastro</a>
+    </div>
+  </nav>
 
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="senha" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
-    </form>
+  <!-- CONTEÚDO -->
+  <main class="main">
+    <div class="login-box">
 
-    <a href="register.html" class="register-link">Criar conta</a>
-  </div>
+      <h1>Login</h1>
+
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="senha" placeholder="password" required>
+        <button type="submit">Entrar</button>
+      </form>
+
+      <a href="register.html" class="register-link">Criar conta</a>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 E-Commerce - Todos os direitos reservados</p>
+  </footer>
 
   <script type="module" src="js/login.js"></script>
+  <script src="js/transition.js"></script>
+
 </body>
 </html>
