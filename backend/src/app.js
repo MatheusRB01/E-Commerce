@@ -4,7 +4,13 @@ import { produtoRoutes, authRoutes, adminRouters, chatRoutes, router} from './ro
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: [
+    "http://127.0.0.1:5500",
+    "https://SEU-FRONT.vercel.app"
+  ],
+  credentials: true
+}))
 app.use(express.json())
 
 app.use('/produtos', produtoRoutes)
