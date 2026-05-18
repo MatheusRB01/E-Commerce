@@ -104,7 +104,7 @@ async function carregarUsuario() {
 
     const res =
       await fetch(
-        "https://e-commerce-production-b6bf.up.railway.app/auth/perfil",
+        "https://e-commerce-production-4f36.up.railway.app/auth/perfil",
         {
 
           headers: {

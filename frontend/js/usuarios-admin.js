@@ -60,7 +60,7 @@ async function excluirUsuario(id) {
 
         const response = await fetch(
 
-            `https://e-commerce-production-b6bf.up.railway.app/admin/usuarios/${id}`,
+            `https://e-commerce-production-4f36.up.railway.app/admin/usuarios/${id}`,
 
             {
                 method: 'DELETE'

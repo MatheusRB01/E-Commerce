@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/produtos"
+const API = "https://e-commerce-production-4f36.up.railway.app/produtos"
 
 const form =
   document.getElementById("form")
@@ -52,7 +52,7 @@ async function carregarUsuario() {
 
     const response =
       await fetch(
-        "http://localhost:3000/auth/perfil",
+        "https://e-commerce-production-4f36.up.railway.app/auth/perfil",
         {
 
           headers: {
@@ -841,7 +841,7 @@ async function carregarClientes() {
 
     const res =
       await fetch(
-        "http://localhost:3000/usuarios"
+        "https://e-commerce-production-4f36.up.railway.app/usuarios"
       )
 
     const usuarios =

@@ -13,7 +13,7 @@ if (registerForm) {
     const senha = document.getElementById('regSenha').value
     const telefone = document.getElementById('regTell').value
 
-    const res = await fetch('https://e-commerce-production-b6bf.up.railway.app/auth/register', {
+    const res = await fetch('https://e-commerce-production-4f36.up.railway.app/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome, email, senha, telefone })
