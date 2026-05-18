@@ -6,7 +6,8 @@ const app = express()
 
 app.use(cors({
   origin: [
-    "https://nekaherts.vercel.app"
+    "https://nekaherts.vercel.app",
+    "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
   ],
   credentials: true
 }))

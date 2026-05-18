@@ -7,12 +7,9 @@ import ProdutoModel from "./produtoModel.js"
 
 const db = {
   sequelize,
-  Sequelize: sequelize
+  User: UserModel(sequelize, DataTypes),
+  Message: MessageModel(sequelize, DataTypes),
+  Produto: ProdutoModel(sequelize, DataTypes)
 }
-
-// models
-db.User = UserModel(sequelize, DataTypes)
-db.Message = MessageModel(sequelize, DataTypes)
-
 
 export default db
