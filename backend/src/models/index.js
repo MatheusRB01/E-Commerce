@@ -13,6 +13,6 @@ const db = {
 // models
 db.User = UserModel(sequelize, DataTypes)
 db.Message = MessageModel(sequelize, DataTypes)
-db.Produto = ProdutoModel(sequelize, DataTypes)
+
 
 export default db
