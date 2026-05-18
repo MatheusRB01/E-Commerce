@@ -17,7 +17,7 @@ app.use('/produtos', produtoRoutes)
 app.use('/auth', authRoutes)
 app.use('/admin', adminRouters)
 app.use('/chat', chatRoutes)
-app.use('/router', router)
+app.use('/usuarios', router)
 
 
 
