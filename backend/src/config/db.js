@@ -4,11 +4,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const pool = mysql.createPool({
-  host: process.env.MYSQLHOST,
-  port: process.env.MYSQLPORT,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
+  uri: process.env.MYSQL_PUBLIC_URL,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

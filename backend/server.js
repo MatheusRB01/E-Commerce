@@ -59,12 +59,6 @@ setupSocket(io)
 // START APP
 // ============================
 const start = async () => {
-  console.log({
-  host: process.env.MYSQLHOST,
-  port: process.env.MYSQLPORT,
-  user: process.env.MYSQLUSER,
-  database: process.env.MYSQLDATABASE
-})
   
 
   try {
