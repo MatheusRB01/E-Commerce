@@ -1,7 +1,5 @@
 export default (sequelize, DataTypes) => {
-
-  const Produto = sequelize.define('Produto', {
-
+  const Produto = sequelize.define("Produto", {
     nome: {
       type: DataTypes.STRING,
       allowNull: false
@@ -24,7 +22,6 @@ export default (sequelize, DataTypes) => {
     imagem: {
       type: DataTypes.STRING
     }
-
   })
 
   return Produto

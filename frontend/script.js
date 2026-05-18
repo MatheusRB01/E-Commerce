@@ -26,7 +26,7 @@ const token =
   localStorage.getItem("token")
 
 const socket = io(
-  "http://localhost:3000",
+  "https://e-commerce-production-4f36.up.railway.app",
   {
 
     auth: {
