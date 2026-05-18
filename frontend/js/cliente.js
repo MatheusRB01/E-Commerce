@@ -28,8 +28,7 @@ const token =
 // SOCKET
 // ====================================
 
-const socket = io(
-  "http://localhost:3000",
+const socket = io("https://e-commerce-production-b6bf.up.railway.app",
   {
 
     auth: {
