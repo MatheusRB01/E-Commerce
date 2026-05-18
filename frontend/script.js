@@ -139,7 +139,7 @@ async function carregarProdutos() {
       ${p.imagem
         ? `
           <img
-            src="http://localhost:3000/uploads/${p.imagem}"
+            src="http://e-commerce-production-4f36.up.railway.app/uploads/${p.imagem}"
             alt="${p.nome}"
           >
         `
