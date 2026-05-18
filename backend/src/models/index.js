@@ -3,11 +3,16 @@ import { DataTypes } from "sequelize"
 
 import UserModel from "./User.js"
 import MessageModel from "./message.js"
+import ProdutoModel from "./produtoModel.js"
 
 const db = {
   sequelize,
-  User: UserModel(sequelize, DataTypes),
-  Message: MessageModel(sequelize, DataTypes)
+  Sequelize: sequelize
 }
+
+// models
+db.User = UserModel(sequelize, DataTypes)
+db.Message = MessageModel(sequelize, DataTypes)
+db.Produto = ProdutoModel(sequelize, DataTypes)
 
 export default db

@@ -2,20 +2,25 @@ import app from "./src/app.js"
 import dotenv from "dotenv"
 import http from "node:http"
 import { Server } from "socket.io"
-import sequelize from "./src/config/database.js"
 import fs from "fs"
+
+import db from "./src/models/index.js"
+import { setupSocket } from "./src/socket/chat.js"
 
 dotenv.config()
 
 const PORT = process.env.PORT || 8080
 
+// uploads
 const uploadDir = "./uploads"
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true })
 }
 
+// server
 const server = http.createServer(app)
 
+// socket
 const io = new Server(server, {
   cors: {
     origin: "https://nekaherts.vercel.app",
@@ -24,16 +29,14 @@ const io = new Server(server, {
   }
 })
 
-// socket
-import { setupSocket } from "./src/socket/chat.js"
 setupSocket(io)
 
+// start
 const start = async () => {
   try {
-    await sequelize.authenticate()
+    await db.sequelize.authenticate()
     console.log("✅ Banco conectado")
 
-    const db = (await import("./src/models/index.js")).default
     await db.sequelize.sync({ alter: true })
     console.log("🔥 Banco sincronizado")
 
