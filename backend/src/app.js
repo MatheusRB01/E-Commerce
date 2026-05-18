@@ -1,5 +1,4 @@
 import express from 'express'
-import cors from 'cors'
 import { produtoRoutes, authRoutes, adminRouters, chatRoutes, router} from './routes/index.js'
 
 const app = express()
@@ -8,16 +7,22 @@ const allowedOrigins = [
   "https://nekaherts.vercel.app"
 ]
 
+import cors from "cors"
+
+const allowedOrigins = [
+  "https://nekaherts.vercel.app",
+  "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
+]
+
 app.use(cors({
-  origin: function (origin, callback) {
-    // 🔥 permite requests sem origin (Railway / socket / preflight)
+  origin: (origin, callback) => {
     if (!origin) return callback(null, true)
 
     if (allowedOrigins.includes(origin)) {
       return callback(null, true)
     }
 
-    console.log("CORS BLOQUEADO:", origin)
+    console.log("❌ Bloqueado por CORS:", origin)
     return callback(null, false)
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -25,10 +30,9 @@ app.use(cors({
   credentials: true
 }))
 
-// 🔥 ISSO É O QUE ESTAVA FALTANDO DE VERDADE
-app.options("*", cors({
-  origin: allowedOrigins
-}))
+// 🔥 IMPORTANTE
+app.options(/.*/, cors())
+
 
 app.use(express.json())
 
