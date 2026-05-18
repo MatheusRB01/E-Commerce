@@ -1,6 +1,6 @@
 import fs from "fs"
 import path from "path"
-import sequelize from "../database/index.js" // ajuste se o seu caminho for outro
+import sequelize from "../config/database.js" // ajuste se o seu caminho for outro
 import initProduto from "../models/produtoModel.js"
 
 const Produto = initProduto(sequelize, sequelize.Sequelize.DataTypes)
