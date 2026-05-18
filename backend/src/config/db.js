@@ -1,13 +1,10 @@
-import mysql from "mysql2/promise"
-import dotenv from "dotenv"
+export default (sequelize, DataTypes) => {
+  const Produto = sequelize.define("Produto", {
+    nome: DataTypes.STRING,
+    preco: DataTypes.FLOAT,
+    descricao: DataTypes.TEXT,
+    imagem: DataTypes.STRING
+  })
 
-dotenv.config()
-
-const pool = mysql.createPool({
-  uri: process.env.MYSQL_PUBLIC_URL,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-})
-
-export default pool
+  return Produto
+}
