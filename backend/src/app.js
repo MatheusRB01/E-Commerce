@@ -4,9 +4,6 @@ import { produtoRoutes, authRoutes, adminRouters, chatRoutes, router} from './ro
 
 const app = express()
 
-
-import cors from "cors"
-
 const allowedOrigins = [
   "https://nekaherts.vercel.app"
 ]
