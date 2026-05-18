@@ -2,53 +2,56 @@ import * as Produto from '../models/produtoModel.js'
 import fs from 'fs'
 import path from 'path'
 
-export const listar = (req, res) => {
-  Produto.getAll((err, results) => {
-    if (err) return res.status(500).json(err)
+// LISTAR
+export const listar = async (req, res) => {
+  try {
+    const results = await Produto.getAll()
     res.json(results)
-  })
-}
-
-export const buscar = (req, res) => {
-  Produto.getById(req.params.id, (err, results) => {
-    if (err) return res.status(500).json(err)
-    res.json(results[0])
-  })
-}
-
-export const criar = (req, res) => {
-  const { nome, preco, descricao } = req.body
-
-  const imagem = req.file ? req.file.filename : null
-
-  const produto = {
-    nome,
-    preco,
-    descricao,
-    imagem
+  } catch (err) {
+    res.status(500).json(err)
   }
+}
 
-  Produto.create(produto, (err, result) => {
-    if (err) {
-      console.error(err)
-      return res.status(500).json(err)
-    }
+// BUSCAR
+export const buscar = async (req, res) => {
+  try {
+    const result = await Produto.getById(req.params.id)
+    res.json(result)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+// CRIAR
+export const criar = async (req, res) => {
+  try {
+    const { nome, preco, descricao } = req.body
+    const imagem = req.file ? req.file.filename : null
+
+    const result = await Produto.create({
+      nome,
+      preco,
+      descricao,
+      imagem
+    })
 
     res.status(201).json({
       message: 'Produto criado',
       id: result.insertId
     })
-  })
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
 
-export const atualizar = (req, res) => {
-  const id = req.params.id
-  const { nome, preco, descricao } = req.body
+// ATUALIZAR
+export const atualizar = async (req, res) => {
+  try {
+    const id = req.params.id
+    const { nome, preco, descricao } = req.body
 
-  Produto.getById(id, (err, results) => {
-    if (err) return res.status(500).json(err)
-
-    const produtoAtual = results[0]
+    const produtoAtual = await Produto.getById(id)
 
     if (!produtoAtual) {
       return res.status(404).json({ message: 'Produto não encontrado' })
@@ -57,62 +60,48 @@ export const atualizar = (req, res) => {
     let imagem = produtoAtual.imagem
 
     if (req.file) {
-      
       if (produtoAtual.imagem) {
         const caminho = path.resolve('uploads', produtoAtual.imagem)
-
-        if (fs.existsSync(caminho)) {
-          fs.unlinkSync(caminho)
-        }
+        if (fs.existsSync(caminho)) fs.unlinkSync(caminho)
       }
-
       imagem = req.file.filename
     }
 
-    const produtoAtualizado = {
+    await Produto.update(id, {
       nome,
       preco,
       descricao,
       imagem
-    }
-
-    Produto.update(id, produtoAtualizado, (err) => {
-      if (err) return res.status(500).json(err)
-
-      res.json({ message: 'Produto atualizado com sucesso' })
     })
-  })
+
+    res.json({ message: 'Produto atualizado com sucesso' })
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
 
-export const deletar = (req, res) => {
-  const id = req.params.id
+// DELETAR
+export const deletar = async (req, res) => {
+  try {
+    const id = req.params.id
 
-  // 1. Buscar produto
-  Produto.getById(id, (err, results) => {
-    if (err) return res.status(500).json(err)
-
-    const produto = results[0]
+    const produto = await Produto.getById(id)
 
     if (!produto) {
       return res.status(404).json({ message: 'Produto não encontrado' })
     }
 
-    // 2. Deletar imagem se existir
     if (produto.imagem) {
       const caminho = path.resolve('uploads', produto.imagem)
-
-      fs.unlink(caminho, (err) => {
-        if (err) {
-          console.warn('Erro ao deletar imagem:', err)
-        }
-      })
+      if (fs.existsSync(caminho)) fs.unlinkSync(caminho)
     }
 
-    // 3. Deletar do banco
-    Produto.remove(id, (err) => {
-      if (err) return res.status(500).json(err)
+    await Produto.remove(id)
 
-      res.json({ message: 'Produto e imagem deletados' })
-    })
-  })
+    res.json({ message: 'Produto e imagem deletados' })
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
 }
