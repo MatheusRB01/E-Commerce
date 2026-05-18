@@ -132,7 +132,7 @@ loginForm.addEventListener(
         ) {
 
           window.location.href =
-            'index.html'
+            'adimin.html'
 
         } else {
 
