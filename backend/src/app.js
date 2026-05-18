@@ -4,11 +4,22 @@ import { produtoRoutes, authRoutes, adminRouters, chatRoutes, router} from './ro
 
 const app = express()
 
+const allowedOrigins = [
+  "https://nekaherts.vercel.app",
+  "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
+]
+
 app.use(cors({
-  origin: [
-    "https://nekaherts.vercel.app",
-    "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    // permite requests sem origin (Postman, mobile, etc)
+    if (!origin) return callback(null, true)
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true)
+    }
+
+    return callback(new Error("CORS blocked: " + origin), false)
+  },
   credentials: true
 }))
 app.use(express.json())
