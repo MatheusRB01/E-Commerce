@@ -47,11 +47,12 @@ export const register = async (req, res) => {
     })
 
   } catch (error) {
-    console.error(error)
+   console.error("🔥 REGISTER ERROR COMPLETO:", error)
 
-    res.status(500).json({
-      error: 'Erro ao cadastrar'
-    })
+return res.status(500).json({
+  error: error.message,
+  stack: error.stack
+})
   }
 }
 
