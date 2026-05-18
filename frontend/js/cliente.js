@@ -3,30 +3,46 @@
 // ====================================
 
 function checkAuth() {
-  const token = localStorage.getItem("token")
+
+  const token =
+    localStorage.getItem("token")
 
   if (!token) {
-    window.location.replace("login.html")
+
+    window.location.replace(
+      "login.html"
+    )
+
     return null
+
   }
 
   return token
+
 }
 
-const token = checkAuth()
+const token =
+  checkAuth()
 
 // ====================================
 // SOCKET
 // ====================================
 
-const socket = io(
-  "https://e-commerce-production-b6bf.up.railway.app",
+const socket = io("https://e-commerce-production-b6bf.up.railway.app",
   {
-    auth: { token },
+
+    auth: {
+      token
+    },
+
     transports: ["websocket"],
+
     reconnection: true,
+
     reconnectionAttempts: Infinity,
+
     reconnectionDelay: 1000
+
   }
 )
 
@@ -34,56 +50,130 @@ const socket = io(
 // VARIÁVEIS
 // ====================================
 
-let usuarioLogado = null
+let usuarioLogado =
+  null
+
 const ADMIN_ID = 1
 
-let carrinho =
-  JSON.parse(localStorage.getItem("carrinho")) || []
-
 // ====================================
-// SOCKET STATUS
+// CARRINHO
 // ====================================
 
-socket.on("connect", () => {
-  console.log("🟢 Cliente conectado")
-})
-
-socket.on("disconnect", () => {
-  console.log("🔴 Cliente desconectado")
-})
+let carrinho = JSON.parse(
+  localStorage.getItem("carrinho")
+) || []
 
 // ====================================
-// USUÁRIO
+// SOCKET CONNECT
+// ====================================
+
+socket.on(
+  "connect",
+  () => {
+
+    console.log(
+      "🟢 Cliente conectado"
+    )
+
+  }
+)
+
+// ====================================
+// SOCKET DISCONNECT
+// ====================================
+
+socket.on(
+  "disconnect",
+  () => {
+
+    console.log(
+      "🔴 Cliente desconectado"
+    )
+
+  }
+)
+
+// ====================================
+// CARREGAR USUÁRIO
 // ====================================
 
 async function carregarUsuario() {
+
   try {
-    const res = await fetch(
-      "https://e-commerce-production-b6bf.up.railway.app/auth/perfil",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
+
+    const res =
+      await fetch(
+        "https://e-commerce-production-4f36.up.railway.app/auth/perfil",
+        {
+
+          headers: {
+
+            Authorization:
+              `Bearer ${token}`
+
+          }
+
         }
-      }
-    )
+      )
 
-    if (!res.ok) return
+    if (!res.ok) {
 
-    const data = await res.json()
+      console.log(
+        "Erro ao validar usuário"
+      )
 
-    usuarioLogado = data.user
+      return
 
-    const userName = document.getElementById("userName")
-
-    if (userName) {
-      userName.innerHTML = `👤 ${usuarioLogado.nome}`
     }
 
-    socket.emit("buscarMensagens", ADMIN_ID)
+    const data =
+      await res.json()
+
+    usuarioLogado =
+      data.user
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(
+        usuarioLogado
+      )
+    )
+
+    atualizarNome(
+      usuarioLogado
+    )
+
+    socket.emit(
+      "buscarMensagens",
+      ADMIN_ID
+    )
 
   } catch (err) {
+
     console.error(err)
+
   }
+
+}
+
+// ====================================
+// ATUALIZA NOME
+// ====================================
+
+function atualizarNome(user) {
+
+  const userName =
+    document.getElementById(
+      "userName"
+    )
+
+  if (userName) {
+
+    userName.innerHTML =
+      `👤 ${user.nome}`
+
+  }
+
 }
 
 // ====================================
@@ -91,23 +181,30 @@ async function carregarUsuario() {
 // ====================================
 
 async function carregarProdutos() {
+
   try {
-    const res = await fetch(
-      "https://e-commerce-production-b6bf.up.railway.app/produtos"
-    )
 
-    const data = await res.json()
+    const res =
+      await fetch(
+        "https://e-commerce-production-b6bf.up.railway.app/produtos"
+      )
 
-    const produtos = Array.isArray(data) ? data : []
+    const produtos =
+      await res.json()
 
-    const lista = document.getElementById("lista")
+    const lista =
+      document.getElementById(
+        "lista"
+      )
 
     if (!lista) return
 
     lista.innerHTML = ""
 
     produtos.forEach(p => {
+
       lista.innerHTML += `
+
         <div class="produto">
 
           <img
@@ -117,7 +214,9 @@ async function carregarProdutos() {
 
           <div class="produto-content">
 
-            <h3>${p.nome}</h3>
+            <h3>
+              ${p.nome}
+            </h3>
 
             <p class="preco">
               R$ ${Number(p.preco).toFixed(2)}
@@ -129,7 +228,9 @@ async function carregarProdutos() {
 
             <button
               class="add-cart"
-              onclick='adicionarCarrinho(${JSON.stringify(p)})'
+              onclick='adicionarCarrinho(
+                ${JSON.stringify(p)}
+              )'
             >
               Adicionar ao Carrinho
             </button>
@@ -137,44 +238,100 @@ async function carregarProdutos() {
           </div>
 
         </div>
+
       `
+
     })
 
   } catch (err) {
-    console.error("Erro produtos:", err)
+
+    console.error(
+      "Erro produtos:",
+      err
+    )
+
   }
+
 }
 
 // ====================================
 // CARRINHO
 // ====================================
 
+function toggleCarrinho() {
+
+  const carrinhoBox =
+    document.getElementById(
+      "carrinho"
+    )
+
+  carrinhoBox.classList.toggle(
+    "active"
+  )
+
+}
+
+// ====================================
+// ADICIONAR
+// ====================================
+
 function adicionarCarrinho(produto) {
-  carrinho.push({
-    id: produto.id,
-    nome: produto.nome,
-    preco: produto.preco,
-    imagem: produto.imagem
-  })
+
+  carrinho.push(produto)
 
   salvarCarrinho()
+
   atualizarCarrinho()
+
 }
+
+// ====================================
+// REMOVER
+// ====================================
 
 function removerCarrinho(index) {
+
   carrinho.splice(index, 1)
+
   salvarCarrinho()
+
   atualizarCarrinho()
+
 }
+
+// ====================================
+// SALVAR
+// ====================================
 
 function salvarCarrinho() {
-  localStorage.setItem("carrinho", JSON.stringify(carrinho))
+
+  localStorage.setItem(
+    "carrinho",
+    JSON.stringify(carrinho)
+  )
+
 }
 
+// ====================================
+// ATUALIZAR CARRINHO
+// ====================================
+
 function atualizarCarrinho() {
-  const cartItems = document.getElementById("cart-items")
-  const cartCount = document.getElementById("cart-count")
-  const cartTotal = document.getElementById("cart-total")
+
+  const cartItems =
+    document.getElementById(
+      "cart-items"
+    )
+
+  const cartCount =
+    document.getElementById(
+      "cart-count"
+    )
+
+  const cartTotal =
+    document.getElementById(
+      "cart-total"
+    )
 
   if (!cartItems) return
 
@@ -182,35 +339,54 @@ function atualizarCarrinho() {
 
   let total = 0
 
-  carrinho.forEach((produto, index) => {
-    total += Number(produto.preco)
+  carrinho.forEach(
+    (produto, index) => {
 
-    cartItems.innerHTML += `
-      <div class="cart-item">
+      total += Number(
+        produto.preco
+      )
 
-        <img
-          src="https://e-commerce-production-b6bf.up.railway.app/uploads/${produto.imagem}"
-          alt="${produto.nome}"
-        >
+      cartItems.innerHTML += `
 
-        <div class="cart-info">
+        <div class="cart-item">
 
-          <h4>${produto.nome}</h4>
+          <img
+            src="http://localhost:3000/uploads/${produto.imagem}"
+            alt="${produto.nome}"
+          >
 
-          <p>R$ ${Number(produto.preco).toFixed(2)}</p>
+          <div class="cart-info">
 
-          <button onclick="removerCarrinho(${index})">
-            Remover
-          </button>
+            <h4>
+              ${produto.nome}
+            </h4>
+
+            <p>
+              R$ ${Number(produto.preco).toFixed(2)}
+            </p>
+
+            <button
+              class="remove-btn"
+              onclick="removerCarrinho(${index})"
+            >
+              Remover
+            </button>
+
+          </div>
 
         </div>
 
-      </div>
-    `
-  })
+      `
 
-  cartCount.innerText = carrinho.length
-  cartTotal.innerText = total.toFixed(2)
+    }
+  )
+
+  cartCount.innerText =
+    carrinho.length
+
+  cartTotal.innerText =
+    total.toFixed(2)
+
 }
 
 // ====================================
@@ -218,115 +394,295 @@ function atualizarCarrinho() {
 // ====================================
 
 function finalizarCompra() {
+
   if (carrinho.length === 0) {
-    alert("Seu carrinho está vazio")
+
+    alert(
+      "Seu carrinho está vazio"
+    )
+
     return
+
   }
 
-  let mensagem = "🛒 *Novo Pedido*%0A%0A"
+  let mensagem =
+    "🛒 *Novo Pedido*%0A%0A"
 
   carrinho.forEach(produto => {
-    mensagem += `• ${produto.nome} - R$ ${Number(produto.preco).toFixed(2)}%0A`
+
+    mensagem +=
+      `• ${produto.nome} - R$ ${Number(produto.preco).toFixed(2)}%0A`
+
   })
 
-  const total = carrinho.reduce(
-    (acc, item) => acc + Number(item.preco),
-    0
-  )
+  const total =
+    carrinho.reduce(
+      (acc, item) => {
 
-  mensagem += `%0A💰 Total: R$ ${total.toFixed(2)}`
+        return acc + Number(item.preco)
+
+      },
+      0
+    )
+
+  mensagem +=
+    `%0A💰 Total: R$ ${total.toFixed(2)}`
 
   window.open(
     `https://wa.me/5511966733218?text=${mensagem}`,
     "_blank"
   )
 
+  // LIMPA O CARRINHO
   carrinho = []
+
   salvarCarrinho()
+
   atualizarCarrinho()
+}
+
+// ====================================
+// LOGOUT
+// ====================================
+
+const logoutBtn =
+  document.querySelector(
+    ".logout"
+  )
+
+if (logoutBtn) {
+
+  logoutBtn.addEventListener(
+    "click",
+    e => {
+
+      e.preventDefault()
+
+      localStorage.clear()
+
+      window.location.replace(
+        "login.html"
+      )
+
+    }
+  )
+
 }
 
 // ====================================
 // CHAT
 // ====================================
 
+const abrirChat =
+  document.getElementById(
+    "abrirChat"
+  )
+
+const fecharChat =
+  document.getElementById(
+    "fecharChat"
+  )
+
+const chatBox =
+  document.getElementById(
+    "chatBox"
+  )
+
+if (
+  abrirChat &&
+  fecharChat &&
+  chatBox
+) {
+
+  abrirChat.addEventListener(
+    "click",
+    () => {
+
+      chatBox.classList.add(
+        "active"
+      )
+
+    }
+  )
+
+  fecharChat.addEventListener(
+    "click",
+    () => {
+
+      chatBox.classList.remove(
+        "active"
+      )
+
+    }
+  )
+
+}
+
+// ====================================
+// MSG
+// ====================================
+
 function mostrarMensagem(msg) {
-  const box = document.getElementById("mensagens")
+
+  const box =
+    document.getElementById(
+      "mensagens"
+    )
+
   if (!box) return
 
-  const div = document.createElement("div")
+  const div =
+    document.createElement(
+      "div"
+    )
 
   const minhaMensagem =
-    usuarioLogado &&
-    Number(msg.from) === Number(usuarioLogado.id)
 
-  div.classList.add("message")
+    Number(msg.from) ===
+    Number(usuarioLogado.id)
 
-  div.classList.add(minhaMensagem ? "mine" : "other")
+  div.classList.add(
+    "message"
+  )
 
-  div.innerText = msg.text
+  if (minhaMensagem) {
+
+    div.classList.add(
+      "mine"
+    )
+
+  } else {
+
+    div.classList.add(
+      "other"
+    )
+
+  }
+
+  div.innerText =
+    msg.text
 
   box.appendChild(div)
 
-  box.scrollTop = box.scrollHeight
+  box.scrollTop =
+    box.scrollHeight
+
 }
 
-socket.on("novaMensagem", msg => {
-  mostrarMensagem(msg)
-})
+socket.on(
+  "novaMensagem",
+  msg => {
 
-socket.on("historicoMensagens", mensagens => {
-  const box = document.getElementById("mensagens")
-  if (!box) return
+    mostrarMensagem(msg)
 
-  box.innerHTML = ""
+  }
+)
 
-  mensagens.forEach(msg => mostrarMensagem(msg))
-})
+socket.on(
+  "historicoMensagens",
+  mensagens => {
+
+    const box =
+      document.getElementById(
+        "mensagens"
+      )
+
+    if (!box) return
+
+    box.innerHTML = ""
+
+    mensagens.forEach(msg => {
+
+      mostrarMensagem(msg)
+
+    })
+
+  }
+)
 
 // ====================================
 // ENVIAR MSG
 // ====================================
 
 function enviarMensagem() {
-  const input = document.getElementById("inputMensagem")
+
+  const input =
+    document.getElementById(
+      "inputMensagem"
+    )
+
   if (!input) return
 
-  const texto = input.value.trim()
+  const texto =
+    input.value.trim()
+
   if (!texto) return
 
-  socket.emit("mensagem", {
-    to: ADMIN_ID,
-    text: texto
-  })
+  socket.emit(
+    "mensagem",
+    {
+
+      to: ADMIN_ID,
+
+      text: texto
+
+    }
+  )
 
   input.value = ""
+
 }
 
-// ENTER
-document.getElementById("inputMensagem")
-  ?.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-      enviarMensagem()
-    }
-  })
+document
+  .getElementById(
+    "btnEnviar"
+  )
 
-document.getElementById("btnEnviar")
-  ?.addEventListener("click", enviarMensagem)
+  ?.addEventListener(
+    "click",
+    enviarMensagem
+  )
+
+document
+  .getElementById(
+    "inputMensagem"
+  )
+
+  ?.addEventListener(
+    "keydown",
+    e => {
+
+      if (e.key === "Enter") {
+
+        enviarMensagem()
+
+      }
+
+    }
+  )
 
 // ====================================
 // INIT
 // ====================================
 
 carregarUsuario()
+
 carregarProdutos()
+
 atualizarCarrinho()
 
 // ====================================
-// EXPORT GLOBAL
+// FUNÇÕES GLOBAIS
 // ====================================
 
-window.adicionarCarrinho = adicionarCarrinho
-window.removerCarrinho = removerCarrinho
-window.finalizarCompra = finalizarCompra
+window.adicionarCarrinho =
+  adicionarCarrinho
+
+window.removerCarrinho =
+  removerCarrinho
+
+window.toggleCarrinho =
+  toggleCarrinho
+
+window.finalizarCompra =
+  finalizarCompra
