@@ -87,7 +87,7 @@ async function checkAdmin() {
 
     const res =
       await fetch(
-        "http://localhost:3000/auth/perfil",
+        "https://e-commerce-production-b6bf.up.railway.app/auth/perfil",
         {
 
           headers: {

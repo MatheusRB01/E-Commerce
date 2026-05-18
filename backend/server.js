@@ -2,7 +2,7 @@ import app from "./src/app.js"
 import dotenv from "dotenv"
 import http from "node:http"
 import { Server } from "socket.io"
-import db from "./src/models/index.js"
+import sequelize from "./src/models/index.js"
 import userRoutes from "./src/routes/user.router.js"
 import { setupSocket } from "./src/socket/chat.js"
 import fs from "fs"
@@ -15,12 +15,19 @@ dotenv.config()
 app.use("/usuarios", userRoutes)
 
 // ============================
-// PORTA (RENDER SAFE)
+// HEALTH CHECK
+// ============================
+app.get("/", (req, res) => {
+  res.send("API ONLINE 🚀")
+})
+
+// ============================
+// PORTA
 // ============================
 const PORT = process.env.PORT || 3000
 
 // ============================
-// UPLOADS (evita crash)
+// UPLOADS
 // ============================
 const uploadDir = "./uploads"
 
@@ -38,30 +45,29 @@ const server = http.createServer(app)
 // ============================
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
+    origin: "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ["websocket", "polling"]
 })
 
-console.log("DB_HOST =", process.env.DB_HOST)
-console.log("DB_PORT =", process.env.DB_PORT)
-console.log("DB_USER =", process.env.DB_USER)
-console.log("DB_NAME =", process.env.DB_NAME)
+// SOCKET UMA VEZ
 setupSocket(io)
 
 // ============================
-// START APP SEGURO
+// START APP
 // ============================
 const start = async () => {
-  try {
-  setupSocket(io)
-  console.log("🟢 Socket iniciado")
-} catch (err) {
-  console.error("🔴 Socket falhou:", err.message)
-}
 
-  // Server SEMPRE sobe (mesmo se DB falhar)
-  server.listen(PORT, () => {
+  try {
+    await sequelize.authenticate()
+    console.log("✅ Banco conectado")
+  } catch (err) {
+    console.error("❌ Erro no banco:", err.message)
+  }
+
+  server.listen(PORT, "0.0.0.0", () => {
     console.log(`🚀 Servidor rodando na porta ${PORT}`)
   })
 }

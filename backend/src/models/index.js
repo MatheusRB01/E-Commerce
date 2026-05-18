@@ -10,4 +10,4 @@ const db = {
   Message: MessageModel(sequelize, DataTypes)
 }
 
-export default db
+export default sequelize

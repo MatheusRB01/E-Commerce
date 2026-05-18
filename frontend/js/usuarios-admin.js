@@ -3,7 +3,7 @@ async function carregarUsuarios() {
     try {
 
         const response = await fetch(
-            'http://localhost:3000/admin/usuarios'
+            'https://e-commerce-production-b6bf.up.railway.app/admin/usuarios'
         )
 
 
@@ -60,7 +60,7 @@ async function excluirUsuario(id) {
 
         const response = await fetch(
 
-            `http://localhost:3000/admin/usuarios/${id}`,
+            `https://e-commerce-production-b6bf.up.railway.app/admin/usuarios/${id}`,
 
             {
                 method: 'DELETE'

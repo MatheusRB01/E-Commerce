@@ -1,23 +1,21 @@
 import { Sequelize } from "sequelize"
+
 import dotenv from "dotenv"
 
 dotenv.config()
 
+
+
+
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  process.env.MYSQLDATABASE,
+  process.env.MYSQLUSER,
+  process.env.MYSQLPASSWORD,
   {
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
+    host: process.env.MYSQLHOST,
+    port: process.env.MYSQLPORT,
     dialect: "mysql",
-    logging: false,
-    dialectOptions: {
-      connectTimeout: 20000
-    },
-    retry: {
-      max: 3
-    }
+    logging: false
   }
 )
 

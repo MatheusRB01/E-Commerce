@@ -76,7 +76,7 @@ loginForm.addEventListener(
     try {
 
       const res = await fetch(
-        'http://localhost:3000/auth/login',
+        'https://e-commerce-production-b6bf.up.railway.app/auth/login',
         {
           method: 'POST',
 

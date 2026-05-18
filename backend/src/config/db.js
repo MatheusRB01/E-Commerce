@@ -1,21 +1,17 @@
-import mysql from 'mysql2'
-import dotenv from 'dotenv'
+import mysql from "mysql2/promise"
+import dotenv from "dotenv"
 
 dotenv.config()
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+const pool = mysql.createPool({
+  host: process.env.MYSQLHOST,
+  port: process.env.MYSQLPORT,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 })
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar no banco:', err)
-  } else {
-    console.log('Conectado ao MySQL 🚀')
-  }
-})
-
-export default connection
+export default pool
