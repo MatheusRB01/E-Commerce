@@ -1,34 +1,31 @@
-import db from '../config/db.js'
+export default (sequelize, DataTypes) => {
 
-export const getAll = async () => {
-  const [rows] = await db.query('SELECT * FROM produtos')
-  return rows
-}
+  const Produto = sequelize.define('Produto', {
 
-export const getById = async (id) => {
-  const [rows] = await db.query('SELECT * FROM produtos WHERE id = ?', [id])
-  return rows[0]
-}
+    nome: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
 
-export const create = async (produto) => {
-  const [result] = await db.query('INSERT INTO produtos SET ?', produto)
-  return result
-}
+    descricao: {
+      type: DataTypes.TEXT
+    },
 
-export const update = async (id, produto) => {
-  const [result] = await db.query('UPDATE produtos SET ? WHERE id = ?', [produto, id])
-  return result
-}
+    preco: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
 
-export const remove = async (id) => {
-  const [result] = await db.query('DELETE FROM produtos WHERE id = ?', [id])
-  return result
-}
+    estoque: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
 
-export default {
-  remove,
-  getAll,
-  getById,
-  create,
-  update
+    imagem: {
+      type: DataTypes.STRING
+    }
+
+  })
+
+  return Produto
 }
