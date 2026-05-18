@@ -1,179 +1,101 @@
 // ====================================
+// CONFIG BASE
+// ====================================
+
+const API_URL = "https://e-commerce-production-b6bf.up.railway.app";
+
+// ====================================
 // AUTH
 // ====================================
 
 function checkAuth() {
-
-  const token =
-    localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   if (!token) {
-
-    window.location.replace(
-      "login.html"
-    )
-
-    return null
-
+    window.location.replace("login.html");
+    return null;
   }
 
-  return token
-
+  return token;
 }
 
-const token =
-  checkAuth()
+const token = checkAuth();
 
 // ====================================
 // SOCKET
 // ====================================
 
-const socket = io("https://e-commerce-production-b6bf.up.railway.app",
-  {
-
-    auth: {
-      token
-    },
-
-    transports: ["websocket"],
-
-    reconnection: true,
-
-    reconnectionAttempts: Infinity,
-
-    reconnectionDelay: 1000
-
-  }
-)
+const socket = io(API_URL, {
+  auth: { token },
+  transports: ["websocket"],
+  reconnection: true,
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000
+});
 
 // ====================================
 // VARIÁVEIS
 // ====================================
 
-let usuarioLogado =
-  null
-
-const ADMIN_ID = 1
+let usuarioLogado = null;
+const ADMIN_ID = 1;
 
 // ====================================
 // CARRINHO
 // ====================================
 
-let carrinho = JSON.parse(
-  localStorage.getItem("carrinho")
-) || []
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
 // ====================================
-// SOCKET CONNECT
+// SOCKET EVENTS
 // ====================================
 
-socket.on(
-  "connect",
-  () => {
+socket.on("connect", () => {
+  console.log("🟢 Cliente conectado");
+});
 
-    console.log(
-      "🟢 Cliente conectado"
-    )
-
-  }
-)
+socket.on("disconnect", () => {
+  console.log("🔴 Cliente desconectado");
+});
 
 // ====================================
-// SOCKET DISCONNECT
-// ====================================
-
-socket.on(
-  "disconnect",
-  () => {
-
-    console.log(
-      "🔴 Cliente desconectado"
-    )
-
-  }
-)
-
-// ====================================
-// CARREGAR USUÁRIO
+// USUÁRIO
 // ====================================
 
 async function carregarUsuario() {
-
   try {
-
-    const res =
-      await fetch(
-        "https://e-commerce-production-4f36.up.railway.app/auth/perfil",
-        {
-
-          headers: {
-
-            Authorization:
-              `Bearer ${token}`
-
-          }
-
-        }
-      )
+    const res = await fetch(`${API_URL}/auth/perfil`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
     if (!res.ok) {
-
-      console.log(
-        "Erro ao validar usuário"
-      )
-
-      return
-
+      console.log("Erro ao validar usuário");
+      return;
     }
 
-    const data =
-      await res.json()
+    const data = await res.json();
 
-    usuarioLogado =
-      data.user
+    usuarioLogado = data.user;
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(
-        usuarioLogado
-      )
-    )
+    localStorage.setItem("user", JSON.stringify(usuarioLogado));
 
-    atualizarNome(
-      usuarioLogado
-    )
+    atualizarNome(usuarioLogado);
 
-    socket.emit(
-      "buscarMensagens",
-      ADMIN_ID
-    )
+    socket.emit("buscarMensagens", ADMIN_ID);
 
   } catch (err) {
-
-    console.error(err)
-
+    console.error(err);
   }
-
 }
 
-// ====================================
-// ATUALIZA NOME
-// ====================================
-
 function atualizarNome(user) {
-
-  const userName =
-    document.getElementById(
-      "userName"
-    )
+  const userName = document.getElementById("userName");
 
   if (userName) {
-
-    userName.innerHTML =
-      `👤 ${user.nome}`
-
+    userName.innerHTML = `👤 ${user.nome}`;
   }
-
 }
 
 // ====================================
@@ -181,42 +103,27 @@ function atualizarNome(user) {
 // ====================================
 
 async function carregarProdutos() {
-
   try {
+    const res = await fetch(`${API_URL}/produtos`);
+    const produtos = await res.json();
 
-    const res =
-      await fetch(
-        "https://e-commerce-production-b6bf.up.railway.app/produtos"
-      )
+    const lista = document.getElementById("lista");
+    if (!lista) return;
 
-    const produtos =
-      await res.json()
-
-    const lista =
-      document.getElementById(
-        "lista"
-      )
-
-    if (!lista) return
-
-    lista.innerHTML = ""
+    lista.innerHTML = "";
 
     produtos.forEach(p => {
-
       lista.innerHTML += `
-
         <div class="produto">
 
-          <img
-            src="https://e-commerce-production-b6bf.up.railway.app/uploads/${p.imagem}"
+          <img 
+            src="${API_URL}/uploads/${p.imagem}" 
             alt="${p.nome}"
           >
 
           <div class="produto-content">
 
-            <h3>
-              ${p.nome}
-            </h3>
+            <h3>${p.nome}</h3>
 
             <p class="preco">
               R$ ${Number(p.preco).toFixed(2)}
@@ -226,32 +133,21 @@ async function carregarProdutos() {
               ${p.descricao || ""}
             </p>
 
-            <button
+            <button 
               class="add-cart"
-              onclick='adicionarCarrinho(
-                ${JSON.stringify(p)}
-              )'
+              onclick='adicionarCarrinho(${JSON.stringify(p)})'
             >
               Adicionar ao Carrinho
             </button>
 
           </div>
-
         </div>
-
-      `
-
-    })
+      `;
+    });
 
   } catch (err) {
-
-    console.error(
-      "Erro produtos:",
-      err
-    )
-
+    console.error("Erro produtos:", err);
   }
-
 }
 
 // ====================================
@@ -259,134 +155,68 @@ async function carregarProdutos() {
 // ====================================
 
 function toggleCarrinho() {
-
-  const carrinhoBox =
-    document.getElementById(
-      "carrinho"
-    )
-
-  carrinhoBox.classList.toggle(
-    "active"
-  )
-
+  const carrinhoBox = document.getElementById("carrinho");
+  carrinhoBox.classList.toggle("active");
 }
-
-// ====================================
-// ADICIONAR
-// ====================================
 
 function adicionarCarrinho(produto) {
-
-  carrinho.push(produto)
-
-  salvarCarrinho()
-
-  atualizarCarrinho()
-
+  carrinho.push(produto);
+  salvarCarrinho();
+  atualizarCarrinho();
 }
-
-// ====================================
-// REMOVER
-// ====================================
 
 function removerCarrinho(index) {
-
-  carrinho.splice(index, 1)
-
-  salvarCarrinho()
-
-  atualizarCarrinho()
-
+  carrinho.splice(index, 1);
+  salvarCarrinho();
+  atualizarCarrinho();
 }
-
-// ====================================
-// SALVAR
-// ====================================
 
 function salvarCarrinho() {
-
-  localStorage.setItem(
-    "carrinho",
-    JSON.stringify(carrinho)
-  )
-
+  localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
-// ====================================
-// ATUALIZAR CARRINHO
-// ====================================
-
 function atualizarCarrinho() {
+  const cartItems = document.getElementById("cart-items");
+  const cartCount = document.getElementById("cart-count");
+  const cartTotal = document.getElementById("cart-total");
 
-  const cartItems =
-    document.getElementById(
-      "cart-items"
-    )
+  if (!cartItems) return;
 
-  const cartCount =
-    document.getElementById(
-      "cart-count"
-    )
+  cartItems.innerHTML = "";
 
-  const cartTotal =
-    document.getElementById(
-      "cart-total"
-    )
+  let total = 0;
 
-  if (!cartItems) return
+  carrinho.forEach((produto, index) => {
+    total += Number(produto.preco);
 
-  cartItems.innerHTML = ""
+    cartItems.innerHTML += `
+      <div class="cart-item">
 
-  let total = 0
+        <img 
+          src="${API_URL}/uploads/${produto.imagem}" 
+          alt="${produto.nome}"
+        >
 
-  carrinho.forEach(
-    (produto, index) => {
+        <div class="cart-info">
 
-      total += Number(
-        produto.preco
-      )
+          <h4>${produto.nome}</h4>
 
-      cartItems.innerHTML += `
+          <p>R$ ${Number(produto.preco).toFixed(2)}</p>
 
-        <div class="cart-item">
-
-          <img
-            src="http://localhost:3000/uploads/${produto.imagem}"
-            alt="${produto.nome}"
+          <button 
+            class="remove-btn"
+            onclick="removerCarrinho(${index})"
           >
-
-          <div class="cart-info">
-
-            <h4>
-              ${produto.nome}
-            </h4>
-
-            <p>
-              R$ ${Number(produto.preco).toFixed(2)}
-            </p>
-
-            <button
-              class="remove-btn"
-              onclick="removerCarrinho(${index})"
-            >
-              Remover
-            </button>
-
-          </div>
+            Remover
+          </button>
 
         </div>
+      </div>
+    `;
+  });
 
-      `
-
-    }
-  )
-
-  cartCount.innerText =
-    carrinho.length
-
-  cartTotal.innerText =
-    total.toFixed(2)
-
+  cartCount.innerText = carrinho.length;
+  cartTotal.innerText = total.toFixed(2);
 }
 
 // ====================================
@@ -394,295 +224,132 @@ function atualizarCarrinho() {
 // ====================================
 
 function finalizarCompra() {
-
   if (carrinho.length === 0) {
-
-    alert(
-      "Seu carrinho está vazio"
-    )
-
-    return
-
+    alert("Seu carrinho está vazio");
+    return;
   }
 
-  let mensagem =
-    "🛒 *Novo Pedido*%0A%0A"
+  let mensagem = "🛒 *Novo Pedido*%0A%0A";
 
   carrinho.forEach(produto => {
+    mensagem += `• ${produto.nome} - R$ ${Number(produto.preco).toFixed(2)}%0A`;
+  });
 
-    mensagem +=
-      `• ${produto.nome} - R$ ${Number(produto.preco).toFixed(2)}%0A`
+  const total = carrinho.reduce((acc, item) => acc + Number(item.preco), 0);
 
-  })
-
-  const total =
-    carrinho.reduce(
-      (acc, item) => {
-
-        return acc + Number(item.preco)
-
-      },
-      0
-    )
-
-  mensagem +=
-    `%0A💰 Total: R$ ${total.toFixed(2)}`
+  mensagem += `%0A💰 Total: R$ ${total.toFixed(2)}`;
 
   window.open(
     `https://wa.me/5511966733218?text=${mensagem}`,
     "_blank"
-  )
+  );
 
-  // LIMPA O CARRINHO
-  carrinho = []
-
-  salvarCarrinho()
-
-  atualizarCarrinho()
+  carrinho = [];
+  salvarCarrinho();
+  atualizarCarrinho();
 }
 
 // ====================================
 // LOGOUT
 // ====================================
 
-const logoutBtn =
-  document.querySelector(
-    ".logout"
-  )
-
-if (logoutBtn) {
-
-  logoutBtn.addEventListener(
-    "click",
-    e => {
-
-      e.preventDefault()
-
-      localStorage.clear()
-
-      window.location.replace(
-        "login.html"
-      )
-
-    }
-  )
-
-}
+document.querySelector(".logout")?.addEventListener("click", e => {
+  e.preventDefault();
+  localStorage.clear();
+  window.location.replace("login.html");
+});
 
 // ====================================
 // CHAT
 // ====================================
 
-const abrirChat =
-  document.getElementById(
-    "abrirChat"
-  )
+const abrirChat = document.getElementById("abrirChat");
+const fecharChat = document.getElementById("fecharChat");
+const chatBox = document.getElementById("chatBox");
 
-const fecharChat =
-  document.getElementById(
-    "fecharChat"
-  )
+if (abrirChat && fecharChat && chatBox) {
+  abrirChat.addEventListener("click", () => {
+    chatBox.classList.add("active");
+  });
 
-const chatBox =
-  document.getElementById(
-    "chatBox"
-  )
-
-if (
-  abrirChat &&
-  fecharChat &&
-  chatBox
-) {
-
-  abrirChat.addEventListener(
-    "click",
-    () => {
-
-      chatBox.classList.add(
-        "active"
-      )
-
-    }
-  )
-
-  fecharChat.addEventListener(
-    "click",
-    () => {
-
-      chatBox.classList.remove(
-        "active"
-      )
-
-    }
-  )
-
+  fecharChat.addEventListener("click", () => {
+    chatBox.classList.remove("active");
+  });
 }
 
 // ====================================
-// MSG
+// MENSAGENS
 // ====================================
 
 function mostrarMensagem(msg) {
+  const box = document.getElementById("mensagens");
+  if (!box) return;
 
-  const box =
-    document.getElementById(
-      "mensagens"
-    )
-
-  if (!box) return
-
-  const div =
-    document.createElement(
-      "div"
-    )
+  const div = document.createElement("div");
 
   const minhaMensagem =
+    Number(msg.from) === Number(usuarioLogado?.id);
 
-    Number(msg.from) ===
-    Number(usuarioLogado.id)
+  div.classList.add("message");
 
-  div.classList.add(
-    "message"
-  )
+  div.classList.add(minhaMensagem ? "mine" : "other");
 
-  if (minhaMensagem) {
+  div.innerText = msg.text;
 
-    div.classList.add(
-      "mine"
-    )
-
-  } else {
-
-    div.classList.add(
-      "other"
-    )
-
-  }
-
-  div.innerText =
-    msg.text
-
-  box.appendChild(div)
-
-  box.scrollTop =
-    box.scrollHeight
-
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
 }
 
-socket.on(
-  "novaMensagem",
-  msg => {
+socket.on("novaMensagem", msg => {
+  mostrarMensagem(msg);
+});
 
-    mostrarMensagem(msg)
+socket.on("historicoMensagens", mensagens => {
+  const box = document.getElementById("mensagens");
+  if (!box) return;
 
-  }
-)
-
-socket.on(
-  "historicoMensagens",
-  mensagens => {
-
-    const box =
-      document.getElementById(
-        "mensagens"
-      )
-
-    if (!box) return
-
-    box.innerHTML = ""
-
-    mensagens.forEach(msg => {
-
-      mostrarMensagem(msg)
-
-    })
-
-  }
-)
+  box.innerHTML = "";
+  mensagens.forEach(mostrarMensagem);
+});
 
 // ====================================
-// ENVIAR MSG
+// ENVIAR MENSAGEM
 // ====================================
 
 function enviarMensagem() {
+  const input = document.getElementById("inputMensagem");
+  if (!input) return;
 
-  const input =
-    document.getElementById(
-      "inputMensagem"
-    )
+  const texto = input.value.trim();
+  if (!texto) return;
 
-  if (!input) return
+  socket.emit("mensagem", {
+    to: ADMIN_ID,
+    text: texto
+  });
 
-  const texto =
-    input.value.trim()
-
-  if (!texto) return
-
-  socket.emit(
-    "mensagem",
-    {
-
-      to: ADMIN_ID,
-
-      text: texto
-
-    }
-  )
-
-  input.value = ""
-
+  input.value = "";
 }
 
-document
-  .getElementById(
-    "btnEnviar"
-  )
+document.getElementById("btnEnviar")?.addEventListener("click", enviarMensagem);
 
-  ?.addEventListener(
-    "click",
-    enviarMensagem
-  )
-
-document
-  .getElementById(
-    "inputMensagem"
-  )
-
-  ?.addEventListener(
-    "keydown",
-    e => {
-
-      if (e.key === "Enter") {
-
-        enviarMensagem()
-
-      }
-
-    }
-  )
+document.getElementById("inputMensagem")?.addEventListener("keydown", e => {
+  if (e.key === "Enter") enviarMensagem();
+});
 
 // ====================================
 // INIT
 // ====================================
 
-carregarUsuario()
-
-carregarProdutos()
-
-atualizarCarrinho()
+carregarUsuario();
+carregarProdutos();
+atualizarCarrinho();
 
 // ====================================
-// FUNÇÕES GLOBAIS
+// GLOBALS
 // ====================================
 
-window.adicionarCarrinho =
-  adicionarCarrinho
-
-window.removerCarrinho =
-  removerCarrinho
-
-window.toggleCarrinho =
-  toggleCarrinho
-
-window.finalizarCompra =
-  finalizarCompra
+window.adicionarCarrinho = adicionarCarrinho;
+window.removerCarrinho = removerCarrinho;
+window.toggleCarrinho = toggleCarrinho;
+window.finalizarCompra = finalizarCompra;
