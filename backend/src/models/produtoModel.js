@@ -1,43 +1,29 @@
 import db from '../config/db.js'
 
-// LISTAR
-export const getAll = async () => {
-  const [rows] = await db.query('SELECT * FROM produtos')
-  return rows
+const getAll = (callback) => {
+  db.query('SELECT * FROM produtos', callback)
 }
 
-// POR ID
-export const getById = async (id) => {
-  const [rows] = await db.query(
-    'SELECT * FROM produtos WHERE id = ?',
-    [id]
-  )
-  return rows[0]
+const getById = (id, callback) => {
+  db.query('SELECT * FROM produtos WHERE id = ?', [id], callback)
 }
 
-// CRIAR
-export const create = async (produto) => {
-  const [result] = await db.query(
-    'INSERT INTO produtos SET ?',
-    produto
-  )
-  return result
+const create = (produto, callback) => {
+  db.query('INSERT INTO produtos SET ?', produto, callback)
 }
 
-// ATUALIZAR
-export const update = async (id, produto) => {
-  const [result] = await db.query(
-    'UPDATE produtos SET ? WHERE id = ?',
-    [produto, id]
-  )
-  return result
+const update = (id, produto, callback) => {
+  db.query('UPDATE produtos SET ? WHERE id = ?', [produto, id], callback)
 }
 
-// DELETAR
-export const remove = async (id) => {
-  const [result] = await db.query(
-    'DELETE FROM produtos WHERE id = ?',
-    [id]
-  )
-  return result
+const remove = (id, callback) => {
+  db.query('DELETE FROM produtos WHERE id = ?', [id], callback)
+}
+
+export default {
+  getAll,
+  getById,
+  create,
+  update,
+  remove
 }
