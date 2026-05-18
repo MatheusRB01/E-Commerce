@@ -93,8 +93,6 @@ export function setupSocket(io) {
           .filter(([id, user]) => {
 
             return (
-              user.role === "user" ||
-              user.role === "client" ||
               user.role === "cliente"
             )
 
@@ -108,8 +106,6 @@ export function setupSocket(io) {
       )
 
     }
-
-    enviarClientesOnline()
     // ====================================
     // ROOM USER
     // ====================================
@@ -157,12 +153,9 @@ export function setupSocket(io) {
           // CLIENTE → ADMIN
           // ====================================
 
-          if (
-            role === "cliente"
-          ) {
-
-            to = 1
-
+          if (role === "cliente") {
+            const admin = await db.User.findOne({ where: { role: "admin" } })
+            to = admin.id
           }
 
           // ====================================
@@ -314,7 +307,7 @@ export function setupSocket(io) {
 
         usuariosOnline.delete(userId)
 
-        enviarClientesOnline()
+
 
       }
     )
