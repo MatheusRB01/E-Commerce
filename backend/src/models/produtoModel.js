@@ -24,3 +24,11 @@ export const remove = async (id) => {
   const [result] = await db.query('DELETE FROM produtos WHERE id = ?', [id])
   return result
 }
+
+export default {
+  remove,
+  getAll,
+  getById,
+  create,
+  update
+}
