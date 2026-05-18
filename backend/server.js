@@ -23,10 +23,11 @@ const server = http.createServer(app)
 // socket
 const io = new Server(server, {
   cors: {
-    origin: "https://nekaherts.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true
-  }
+  },
+  transports: ["websocket", "polling"]
 })
 
 setupSocket(io)
