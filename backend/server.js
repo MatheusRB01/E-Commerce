@@ -1,9 +1,7 @@
 import app from "./src/app.js"
-import dotenv from "dotenv"
 import http from "node:http"
 import { Server } from "socket.io"
-import fs from "fs"
-
+import dotenv from "dotenv"
 import db from "./src/models/index.js"
 import { setupSocket } from "./src/socket/chat.js"
 
@@ -11,42 +9,33 @@ dotenv.config()
 
 const PORT = process.env.PORT || 8080
 
-// uploads
-const uploadDir = "./uploads"
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true })
-}
-
-// server
 const server = http.createServer(app)
 
-// socket
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: [
+      "https://nekaherts.vercel.app",
+      "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
+    ],
     methods: ["GET", "POST"],
     credentials: true
   },
-  transports: ["websocket", "polling"]
+  transports: ["polling", "websocket"]
 })
 
 setupSocket(io)
 
-// start
-const start = async () => {
+async function start() {
   try {
     await db.sequelize.authenticate()
-    console.log("✅ Banco conectado")
-
-    await db.sequelize.sync({ alter: true })
-    console.log("🔥 Banco sincronizado")
+    await db.sequelize.sync()
 
     server.listen(PORT, "0.0.0.0", () => {
-      console.log(`🚀 Servidor rodando na porta ${PORT}`)
+      console.log("🚀 Server rodando na porta", PORT)
     })
 
   } catch (err) {
-    console.error("❌ Erro ao iniciar:", err)
+    console.error("Erro server:", err)
   }
 }
 

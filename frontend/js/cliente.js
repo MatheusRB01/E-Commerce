@@ -27,11 +27,11 @@ const token = checkAuth();
 
 const socket = io(API_URL, {
   auth: { token },
-  transports: ["websocket"],
+  transports: ["polling", "websocket"],
   reconnection: true,
   reconnectionAttempts: Infinity,
   reconnectionDelay: 1000
-});
+})
 
 // ====================================
 // VARIÁVEIS
@@ -64,11 +64,13 @@ socket.on("disconnect", () => {
 
 async function carregarUsuario() {
   try {
-    const res = await fetch(`${API_URL}/auth/perfil`, {
+    fetch(`${API_URL}/auth/perfil`, {
+      method: "GET",
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       }
-    });
+    })
 
     if (!res.ok) {
       console.log("Erro ao validar usuário");
