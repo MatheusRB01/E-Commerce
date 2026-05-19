@@ -12,8 +12,8 @@ import {
 const app = express()
 
 const allowedOrigins = [
-  "https://nekaherts.vercel.app",
-  "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
+  "https://nekaharts.vercel.app",
+  "https://nekaharts-htbkxaszc-mathues01s-projects.vercel.app"
 ]
 
 // CORS
