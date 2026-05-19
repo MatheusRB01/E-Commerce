@@ -35,8 +35,7 @@ app.use(cors({
   credentials: true
 }))
 
-// 🔥 IMPORTANTE: não mata o preflight manualmente
-app.options("*", cors())
+app.use(cors())
 
 app.use(express.json())
 
