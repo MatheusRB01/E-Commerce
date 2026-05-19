@@ -2,7 +2,7 @@
 // CONFIG BASE
 // ====================================
 
-const API_URL = "https://e-commerce-production-4f36.up.railway.app";
+const API_URL = "https://e-commerce-production-b6bf.up.railway.app";
 
 // ====================================
 // AUTH

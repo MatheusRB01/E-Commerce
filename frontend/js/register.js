@@ -14,7 +14,7 @@ if (registerForm) {
     const telefone = document.getElementById('regTell').value
 
     try {
-      const res = await fetch('https://e-commerce-production-4f36.up.railway.app/auth/register', {
+      const res = await fetch('https://e-commerce-production-b6bf.up.railway.app/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
