@@ -11,24 +11,34 @@ import {
 
 const app = express()
 
-// 🔥 USE UM ÚNICO BACKEND URL NO PROJETO TODO
 const allowedOrigins = [
   "https://nekaherts.vercel.app",
   "https://nekaherts-lo8kxxcat-mathues01s-projects.vercel.app"
 ]
 
 // ======================
-// CORS CORRIGIDO
+// CORS (VERSÃO SEGURA)
 // ======================
 app.use(cors({
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true)
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true)
+    }
+
+    console.log("❌ CORS bloqueado:", origin)
+    return callback(null, false)
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }))
 
-// preflight
-app.options("*", cors())
+// ======================
+// PRE-FLIGHT CORRIGIDO (SEM "*")
+// ======================
+app.options("/*", cors())
 
 app.use(express.json())
 
@@ -41,7 +51,9 @@ app.use("/admin", adminRouters)
 app.use("/chat", chatRoutes)
 app.use("/usuarios", router)
 
-// uploads
+// ======================
+// UPLOADS
+// ======================
 app.use("/uploads", express.static("uploads"))
 
 export default app
