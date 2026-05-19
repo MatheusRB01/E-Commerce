@@ -17,10 +17,10 @@ const allowedOrigins = [
 ]
 
 // ======================
-// CORS
+// CORS (ROBUSTO)
 // ======================
 app.use(cors({
-  origin: (origin, callback) => {
+  origin: function (origin, callback) {
     if (!origin) return callback(null, true)
 
     if (allowedOrigins.includes(origin)) {
@@ -35,15 +35,8 @@ app.use(cors({
   credentials: true
 }))
 
-// ======================
-// OPTIONS SAFE (SEM ROUTE WILDCARD)
-// ======================
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204)
-  }
-  next()
-})
+// 🔥 IMPORTANTE: não mata o preflight manualmente
+app.options("*", cors())
 
 app.use(express.json())
 
