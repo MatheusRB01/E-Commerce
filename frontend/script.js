@@ -1,4 +1,4 @@
-const API = "https://e-commerce-production-4f36.up.railway.app/produtos"
+const API = "https://e-commerce-production-4f36.up.railway.app/Produtos"
 
 const form =
   document.getElementById("form")
