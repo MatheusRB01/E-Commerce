@@ -618,6 +618,7 @@ function enviarMensagem() {
 
   if (!texto) return
 
+  
   socket.emit(
     "mensagem",
     {
