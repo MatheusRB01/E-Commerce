@@ -671,9 +671,6 @@ carregarProdutos()
 
 atualizarCarrinho()
 
-// ====================================
-// FUNÇÕES GLOBAIS
-// ====================================
 
 window.adicionarCarrinho =
   adicionarCarrinho
