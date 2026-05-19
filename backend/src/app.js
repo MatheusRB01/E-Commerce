@@ -17,7 +17,7 @@ const allowedOrigins = [
 ]
 
 // ======================
-// CORS (VERSÃO SEGURA)
+// CORS
 // ======================
 app.use(cors({
   origin: (origin, callback) => {
@@ -36,9 +36,14 @@ app.use(cors({
 }))
 
 // ======================
-// PRE-FLIGHT CORRIGIDO (SEM "*")
+// OPTIONS SAFE (SEM ROUTE WILDCARD)
 // ======================
-app.options("/*", cors())
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204)
+  }
+  next()
+})
 
 app.use(express.json())
 
