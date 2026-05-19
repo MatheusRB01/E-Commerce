@@ -9,7 +9,7 @@ const token =
 // ====================================
 
 const socket = io(
-  "http://e-commerce-production-b6bf.up.railway.app",
+  "http://e-commerce-production-4f36.up.railway.app",
   {
 
     auth: {
