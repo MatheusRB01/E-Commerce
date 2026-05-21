@@ -109,7 +109,7 @@ NAVBAR
 
   background:#ef4444;
 
-  color:white;
+  color:white !important;
 
   padding:10px 16px;
 
@@ -210,6 +210,18 @@ SIDEBAR
 }
 
 /* =========================================
+PAGES
+========================================= */
+
+.page h2{
+
+  margin-bottom:25px;
+
+  color:#0f172a;
+
+}
+
+/* =========================================
 FORM
 ========================================= */
 
@@ -225,22 +237,39 @@ form{
 
   flex-direction:column;
 
-  align-items:center;
-
   gap:15px;
 
   margin-bottom:40px;
 
   box-shadow:0 10px 25px rgba(0,0,0,.05);
 
+  align-items:center;
+
 }
 
-form input,
+form input{
+
+  width:100%;
+
+  height:50px;
+
+  border:1px solid #dbe2ea;
+
+  border-radius:12px;
+
+  padding:0 15px;
+
+  outline:none;
+
+  font-size:15px;
+
+}
+
 form textarea{
 
   width:100%;
 
-  max-width:500px;
+  min-height:120px;
 
   border:1px solid #dbe2ea;
 
@@ -250,21 +279,9 @@ form textarea{
 
   outline:none;
 
-  font-size:15px;
-
-}
-
-form input{
-
-  height:50px;
-
-}
-
-form textarea{
-
-  min-height:120px;
-
   resize:none;
+
+  font-size:15px;
 
 }
 
@@ -278,8 +295,6 @@ form textarea:focus{
 form button{
 
   width:100%;
-
-  max-width:500px;
 
   height:50px;
 
@@ -313,8 +328,6 @@ UPLOAD
 
   width:100%;
 
-  max-width:500px;
-
   border:2px dashed #cbd5e1;
 
   border-radius:15px;
@@ -341,6 +354,8 @@ PREVIEW
 
 #preview-container{
 
+  width:100%;
+
   display:flex;
 
   justify-content:center;
@@ -351,9 +366,7 @@ PREVIEW
 
   width:100%;
 
-  max-width:250px;
-
-  height:250px;
+  height:320px;
 
   object-fit:contain;
 
@@ -361,7 +374,7 @@ PREVIEW
 
   background:#f8fafc;
 
-  padding:10px;
+  border:1px solid #e2e8f0;
 
 }
 
@@ -373,13 +386,16 @@ PRODUTOS
 
   display:grid;
 
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  grid-template-columns:
+  repeat(auto-fit,minmax(280px,1fr));
 
   gap:25px;
 
 }
 
 .produto{
+
+  position:relative;
 
   background:white;
 
@@ -388,12 +404,6 @@ PRODUTOS
   overflow:hidden;
 
   box-shadow:0 5px 20px rgba(0,0,0,.08);
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
 
   padding:20px;
 
@@ -411,19 +421,17 @@ PRODUTOS
 
   width:100%;
 
-  max-width:220px;
-
-  height:220px;
+  height:300px;
 
   object-fit:contain;
 
-  margin-bottom:15px;
+  display:block;
+
+  margin:auto;
 
 }
 
 .produto-content{
-
-  width:100%;
 
   display:flex;
 
@@ -432,6 +440,8 @@ PRODUTOS
   align-items:center;
 
   text-align:center;
+
+  margin-top:15px;
 
   gap:10px;
 
@@ -443,6 +453,8 @@ PRODUTOS
 
   color:#0f172a;
 
+  font-weight:700;
+
 }
 
 .preco{
@@ -451,17 +463,19 @@ PRODUTOS
 
   font-weight:bold;
 
-  color:#2563eb;
+  color:#1d4ed8;
 
 }
 
 .descricao{
 
-  font-size:14px;
+  font-size:15px;
 
-  color:#64748b;
+  color:#334155;
 
-  line-height:1.5;
+  line-height:1.6;
+
+  font-weight:500;
 
 }
 
@@ -472,21 +486,25 @@ BOTÕES PRODUTO
 .btn-edit,
 .btn-delete{
 
+  position:absolute;
+
+  bottom:15px;
+
   border:none;
 
   border-radius:10px;
 
-  padding:10px 14px;
+  padding:8px 12px;
 
   cursor:pointer;
 
   font-weight:bold;
 
-  transition:.3s;
-
 }
 
 .btn-edit{
+
+  left:15px;
 
   background:#dbeafe;
 
@@ -496,16 +514,11 @@ BOTÕES PRODUTO
 
 .btn-delete{
 
+  right:15px;
+
   background:#fee2e2;
 
   color:#dc2626;
-
-}
-
-.btn-edit:hover,
-.btn-delete:hover{
-
-  transform:translateY(-2px);
 
 }
 
