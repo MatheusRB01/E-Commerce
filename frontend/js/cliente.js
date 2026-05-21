@@ -208,7 +208,7 @@ async function carregarProdutos() {
         <div class="produto">
 
           <img
-            src="https://e-commerce-production-b6bf.up.railway.app/uploads/${p.imagem}"
+            src="https://e-commerce-production-4f36.up.railway.app/uploads/${p.imagem}"
             alt="${p.nome}"
           >
 
