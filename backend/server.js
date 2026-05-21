@@ -4,8 +4,14 @@ import { Server } from "socket.io"
 import dotenv from "dotenv"
 import db from "./src/models/index.js"
 import { setupSocket } from "./src/socket/chat.js"
+import fs from "fs"
 
 dotenv.config()
+
+if (!fs.existsSync("uploads")) {
+fs.mkdirSync("uploads")
+}
+
 
 const PORT = process.env.PORT || 8080
 
