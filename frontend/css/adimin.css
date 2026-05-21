@@ -20,7 +20,9 @@ NAVBAR
 ========================================= */
 
 .navbar{
+
   height:70px;
+
   background:#0f172a;
 
   display:flex;
@@ -35,37 +37,52 @@ NAVBAR
   top:0;
 
   z-index:1000;
+
 }
 
 .logo{
+
   font-size:20px;
   font-weight:bold;
+
 }
 
 .nav-links{
+
   display:flex;
   gap:20px;
+
 }
 
 .nav-links a{
+
   text-decoration:none;
   color:#cbd5e1;
+
   transition:.2s;
+
 }
 
 .nav-links a:hover{
+
   color:#38bdf8;
+
 }
 
 .top-actions{
+
   display:flex;
   align-items:center;
   gap:15px;
+
 }
 
 .chat-button{
+
   border:none;
+
   background:#2563eb;
+
   color:white;
 
   padding:10px 16px;
@@ -73,12 +90,43 @@ NAVBAR
   border-radius:10px;
 
   cursor:pointer;
+
 }
 
 .user{
+
   background:#1e293b;
+
   padding:10px 14px;
+
   border-radius:10px;
+
+}
+
+.logout{
+
+  text-decoration:none;
+
+  background:#ef4444;
+
+  color:white;
+
+  padding:10px 16px;
+
+  border-radius:10px;
+
+  font-weight:bold;
+
+  transition:.3s;
+
+}
+
+.logout:hover{
+
+  background:#dc2626;
+
+  transform:translateY(-2px);
+
 }
 
 /* =========================================
@@ -86,8 +134,29 @@ LAYOUT
 ========================================= */
 
 .container{
+
   display:flex;
+
   min-height:calc(100vh - 70px);
+
+}
+
+.container.full{
+
+  display:block;
+
+  width:100%;
+
+}
+
+#app{
+
+  flex:1;
+
+  width:100%;
+
+  padding:30px;
+
 }
 
 /* =========================================
@@ -95,20 +164,27 @@ SIDEBAR
 ========================================= */
 
 .sidebar{
+
   width:250px;
+
   background:white;
+
   border-right:1px solid #e2e8f0;
 
   padding:20px;
 
   flex-shrink:0;
+
 }
 
 .sidebar h3{
+
   margin-bottom:20px;
+
 }
 
 .sidebar a{
+
   display:block;
 
   text-decoration:none;
@@ -122,29 +198,15 @@ SIDEBAR
   margin-bottom:10px;
 
   transition:.2s;
+
 }
 
 .sidebar a:hover{
+
   background:#eff6ff;
+
   color:#2563eb;
-}
 
-.logout{
-  color:#f7f7f7 !important;
-}
-
-/* =========================================
-APP
-========================================= */
-
-#app{
-  flex:1;
-  padding:30px;
-  overflow:hidden;
-}
-
-.page h2{
-  margin-bottom:25px;
 }
 
 /* =========================================
@@ -152,6 +214,7 @@ FORM
 ========================================= */
 
 form{
+
   background:white;
 
   padding:25px;
@@ -159,32 +222,65 @@ form{
   border-radius:20px;
 
   display:flex;
+
   flex-direction:column;
+
+  align-items:center;
 
   gap:15px;
 
   margin-bottom:40px;
 
   box-shadow:0 10px 25px rgba(0,0,0,.05);
+
 }
 
-form input{
-  height:50px;
+form input,
+form textarea{
+
+  width:100%;
+
+  max-width:500px;
 
   border:1px solid #dbe2ea;
 
   border-radius:12px;
 
-  padding:0 15px;
+  padding:15px;
 
   outline:none;
+
+  font-size:15px;
+
 }
 
-form input:focus{
+form input{
+
+  height:50px;
+
+}
+
+form textarea{
+
+  min-height:120px;
+
+  resize:none;
+
+}
+
+form input:focus,
+form textarea:focus{
+
   border-color:#2563eb;
+
 }
 
 form button{
+
+  width:100%;
+
+  max-width:500px;
+
   height:50px;
 
   border:none;
@@ -198,6 +294,15 @@ form button{
   cursor:pointer;
 
   font-weight:bold;
+
+  transition:.3s;
+
+}
+
+form button:hover{
+
+  background:#1d4ed8;
+
 }
 
 /* =========================================
@@ -205,6 +310,11 @@ UPLOAD
 ========================================= */
 
 .file-upload{
+
+  width:100%;
+
+  max-width:500px;
+
   border:2px dashed #cbd5e1;
 
   border-radius:15px;
@@ -216,10 +326,13 @@ UPLOAD
   cursor:pointer;
 
   color:#64748b;
+
 }
 
 .file-upload input{
+
   display:none;
+
 }
 
 /* =========================================
@@ -227,14 +340,29 @@ PREVIEW
 ========================================= */
 
 #preview-container{
-  display:none;
+
+  display:flex;
+
+  justify-content:center;
+
 }
 
 #preview-img{
+
   width:100%;
-  max-height:300px;
-  object-fit:cover;
+
+  max-width:250px;
+
+  height:250px;
+
+  object-fit:contain;
+
   border-radius:15px;
+
+  background:#f8fafc;
+
+  padding:10px;
+
 }
 
 /* =========================================
@@ -242,51 +370,99 @@ PRODUTOS
 ========================================= */
 
 #lista{
+
   display:grid;
 
-  grid-template-columns:
-    repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
-  gap:20px;
+  gap:25px;
+
 }
 
 .produto{
+
   background:white;
 
-  border-radius:18px;
+  border-radius:20px;
 
   overflow:hidden;
 
-  position:relative;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
 
-  box-shadow:0 10px 25px rgba(0,0,0,.05);
+  display:flex;
 
-  transition:.2s;
+  flex-direction:column;
+
+  align-items:center;
+
+  padding:20px;
+
+  transition:.3s;
+
 }
 
 .produto:hover{
+
   transform:translateY(-5px);
+
 }
 
 .produto img{
+
   width:100%;
+
+  max-width:220px;
+
   height:220px;
-  object-fit:cover;
+
+  object-fit:contain;
+
+  margin-bottom:15px;
+
 }
 
 .produto-content{
-  padding:20px;
+
+  width:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  text-align:center;
+
+  gap:10px;
+
+}
+
+.produto-content h3{
+
+  font-size:22px;
+
+  color:#0f172a;
+
 }
 
 .preco{
-  color:#10b981;
+
+  font-size:24px;
+
   font-weight:bold;
-  margin-top:10px;
+
+  color:#2563eb;
+
 }
 
 .descricao{
-  margin-top:10px;
+
+  font-size:14px;
+
   color:#64748b;
+
+  line-height:1.5;
+
 }
 
 /* =========================================
@@ -295,28 +471,42 @@ BOTÕES PRODUTO
 
 .btn-edit,
 .btn-delete{
-  position:absolute;
-  bottom:15px;
 
   border:none;
 
   border-radius:10px;
 
-  padding:8px 12px;
+  padding:10px 14px;
 
   cursor:pointer;
+
+  font-weight:bold;
+
+  transition:.3s;
+
 }
 
 .btn-edit{
-  left:15px;
+
   background:#dbeafe;
+
   color:#2563eb;
+
 }
 
 .btn-delete{
-  right:15px;
+
   background:#fee2e2;
+
   color:#dc2626;
+
+}
+
+.btn-edit:hover,
+.btn-delete:hover{
+
+  transform:translateY(-2px);
+
 }
 
 /* =========================================
@@ -324,6 +514,7 @@ CHAT
 ========================================= */
 
 .chat-box{
+
   position:fixed;
 
   inset:20px;
@@ -341,10 +532,13 @@ CHAT
   z-index:9999;
 
   box-shadow:0 20px 60px rgba(0,0,0,.25);
+
 }
 
 .chat-box.active{
+
   display:flex;
+
 }
 
 /* =========================================
@@ -352,6 +546,7 @@ HEADER CHAT
 ========================================= */
 
 .chat-header{
+
   height:80px;
 
   background:#0f172a;
@@ -359,21 +554,29 @@ HEADER CHAT
   color:white;
 
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   padding:0 20px;
 
   flex-shrink:0;
+
 }
 
 .chat-info{
+
   display:flex;
+
   align-items:center;
+
   gap:15px;
+
 }
 
 .chat-avatar{
+
   width:45px;
   height:45px;
 
@@ -382,12 +585,17 @@ HEADER CHAT
   background:#2563eb;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
 }
 
 #fecharChat{
+
   background:none;
+
   border:none;
 
   color:white;
@@ -395,6 +603,7 @@ HEADER CHAT
   font-size:24px;
 
   cursor:pointer;
+
 }
 
 /* =========================================
@@ -402,11 +611,13 @@ BODY CHAT
 ========================================= */
 
 .chat-body{
+
   flex:1;
 
   display:flex;
 
   overflow:hidden;
+
 }
 
 /* =========================================
@@ -414,6 +625,7 @@ CLIENTES
 ========================================= */
 
 .clientes-online{
+
   width:300px;
 
   border-right:1px solid #e2e8f0;
@@ -421,24 +633,35 @@ CLIENTES
   background:#f8fafc;
 
   display:flex;
+
   flex-direction:column;
 
   flex-shrink:0;
+
 }
 
 .clientes-header{
+
   padding:20px;
+
   font-weight:bold;
+
   border-bottom:1px solid #e2e8f0;
+
 }
 
 #listaClientes{
+
   flex:1;
+
   overflow-y:auto;
+
 }
 
 .cliente-item{
+
   display:flex;
+
   align-items:center;
 
   gap:12px;
@@ -450,19 +673,57 @@ CLIENTES
   transition:.2s;
 
   border-bottom:1px solid #f1f5f9;
+
+  position:relative;
+
 }
 
 .cliente-item:hover{
+
   background:#eff6ff;
+
 }
 
 .cliente-item.active{
+
   background:#2563eb;
+
   color:white;
+
+}
+
+.cliente-item.online{
+
+  border-left:4px solid #10b981;
+
+}
+
+.cliente-item.nova-mensagem::after{
+
+  content:"";
+
+  width:12px;
+
+  height:12px;
+
+  border-radius:50%;
+
+  background:red;
+
+  position:absolute;
+
+  top:10px;
+
+  right:10px;
+
+  animation:pulse 1s infinite;
+
 }
 
 .cliente-avatar{
+
   width:40px;
+
   height:40px;
 
   border-radius:50%;
@@ -470,12 +731,15 @@ CLIENTES
   background:#dbeafe;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
   font-weight:bold;
 
   color:#2563eb;
+
 }
 
 /* =========================================
@@ -483,12 +747,15 @@ CHAT CONTENT
 ========================================= */
 
 .chat-content{
+
   flex:1;
 
   display:flex;
+
   flex-direction:column;
 
   overflow:hidden;
+
 }
 
 /* =========================================
@@ -496,6 +763,7 @@ MENSAGENS
 ========================================= */
 
 .chat-messages{
+
   flex:1;
 
   padding:20px;
@@ -505,12 +773,15 @@ MENSAGENS
   background:#f1f5f9;
 
   display:flex;
+
   flex-direction:column;
 
   gap:12px;
+
 }
 
 .message{
+
   max-width:70%;
 
   padding:12px 15px;
@@ -518,29 +789,39 @@ MENSAGENS
   border-radius:16px;
 
   word-break:break-word;
+
 }
 
 .message.mine{
+
   align-self:flex-end;
 
   background:#2563eb;
 
   color:white;
+
 }
 
 .message.other{
+
   align-self:flex-start;
 
   background:white;
 
   box-shadow:0 3px 10px rgba(0,0,0,.05);
+
 }
 
 .message small{
+
   display:block;
+
   margin-top:5px;
+
   font-size:11px;
+
   opacity:.7;
+
 }
 
 /* =========================================
@@ -548,6 +829,7 @@ INPUT CHAT
 ========================================= */
 
 .chat-input-area{
+
   padding:15px;
 
   background:white;
@@ -557,9 +839,11 @@ INPUT CHAT
   display:flex;
 
   gap:10px;
+
 }
 
 .chat-input-area input{
+
   flex:1;
 
   height:50px;
@@ -569,9 +853,11 @@ INPUT CHAT
   border-radius:12px;
 
   padding:0 15px;
+
 }
 
 .chat-input-area button{
+
   border:none;
 
   background:#2563eb;
@@ -583,6 +869,36 @@ INPUT CHAT
   border-radius:12px;
 
   cursor:pointer;
+
+}
+
+/* =========================================
+ANIMAÇÃO
+========================================= */
+
+@keyframes pulse{
+
+  0%{
+
+    transform:scale(1);
+    opacity:1;
+
+  }
+
+  50%{
+
+    transform:scale(1.1);
+    opacity:.7;
+
+  }
+
+  100%{
+
+    transform:scale(1);
+    opacity:1;
+
+  }
+
 }
 
 /* =========================================
@@ -592,12 +908,17 @@ RESPONSIVO
 @media(max-width:1000px){
 
   .sidebar{
+
     display:none;
+
   }
 
   .chat-box{
+
     inset:0;
+
     border-radius:0;
+
   }
 
 }
@@ -605,52 +926,83 @@ RESPONSIVO
 @media(max-width:768px){
 
   .navbar{
+
     flex-wrap:wrap;
+
     height:auto;
+
     padding:15px;
+
     gap:15px;
+
   }
 
   .nav-links{
+
     width:100%;
+
     justify-content:center;
+
     flex-wrap:wrap;
+
   }
 
   .container{
+
     flex-direction:column;
+
   }
 
   #app{
+
     padding:15px;
+
   }
 
   .chat-body{
+
     flex-direction:column;
+
   }
 
   .clientes-online{
+
     width:100%;
+
     height:180px;
+
     border-right:none;
+
     border-bottom:1px solid #e2e8f0;
+
   }
 
   #listaClientes{
+
     display:flex;
+
     gap:10px;
+
     overflow-x:auto;
+
     padding:10px;
+
   }
 
   .cliente-item{
+
     min-width:220px;
+
     border-radius:14px;
+
     background:white;
+
   }
 
   .message{
+
     max-width:90%;
+
   }
 
 }
@@ -658,347 +1010,21 @@ RESPONSIVO
 @media(max-width:480px){
 
   .chat-input-area{
+
     flex-direction:column;
+
   }
 
   .chat-input-area button{
+
     height:45px;
+
   }
 
   .cliente-item{
+
     min-width:180px;
-  }
-
-}
-.cliente-item.online {
-
-  border-left: 4px solid #10b981;
-
-}
-
-.cliente-item.online .cliente-avatar {
-
-  position: relative;
-
-}
-
-.cliente-item.online .cliente-avatar::after {
-
-  content: "";
-
-  position: absolute;
-
-  bottom: 0;
-  right: 0;
-
-  width: 12px;
-  height: 12px;
-
-  background: #10b981;
-
-  border: 2px solid white;
-
-  border-radius: 50%;
-
-}
-
-.cliente-item {
-
-  position: relative;
-
-}
-
-.cliente-item.nova-msg {
-
-  background: #dbeafe;
-
-  border-left: 5px solid #2563eb;
-
-  animation: pulse .8s infinite alternate;
-
-}
-
-.badge {
-
-  position: absolute;
-
-  right: 15px;
-
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  background: #ef4444;
-
-  color: white;
-
-  min-width: 24px;
-
-  height: 24px;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 12px;
-
-  font-weight: bold;
-
-}
-
-@keyframes pulse {
-
-  from {
-
-    transform: scale(1);
 
   }
-
-  to {
-
-    transform: scale(1.02);
-
-  }
-
-}
-
-.nova-msg {
-
-  border: 2px solid #22c55e;
-
-  animation: pulse 1s infinite;
-
-  position: relative;
-
-}
-
-.badge {
-
-  position: absolute;
-
-  top: 10px;
-
-  right: 10px;
-
-  background: red;
-
-  color: white;
-
-  width: 22px;
-
-  height: 22px;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 12px;
-
-  font-weight: bold;
-
-}
-
-@keyframes pulse {
-
-  0% {
-
-    transform: scale(1);
-
-  }
-
-  50% {
-
-    transform: scale(1.03);
-
-  }
-
-  100% {
-
-    transform: scale(1);
-
-  }
-
-}
-/* =====================================
-NOVA MENSAGEM
-===================================== */
-
-.cliente-item {
-
-  position: relative;
-
-}
-
-.cliente-item.nova-mensagem::after {
-
-  content: "";
-
-  width: 12px;
-
-  height: 12px;
-
-  border-radius: 50%;
-
-  background: #ef4444;
-
-  position: absolute;
-
-  top: 12px;
-
-  right: 12px;
-
-  animation: pulse 1s infinite;
-
-}
-
-@keyframes pulse {
-
-  0% {
-
-    transform: scale(1);
-
-    opacity: 1;
-
-  }
-
-  50% {
-
-    transform: scale(1.4);
-
-    opacity: .6;
-
-  }
-
-  100% {
-
-    transform: scale(1);
-
-    opacity: 1;
-
-  }
-
-}
-
-/* ========================================
-NOTIFICAÇÃO NOVA MENSAGEM
-======================================== */
-
-.cliente-item {
-  position: relative;
-}
-
-.cliente-item.nova-mensagem::after {
-
-  content: "";
-
-  width: 12px;
-  height: 12px;
-
-  border-radius: 50%;
-
-  background: red;
-
-  position: absolute;
-
-  top: 10px;
-  right: 10px;
-
-  animation: pulse 1s infinite;
-}
-
-/* animação */
-
-@keyframes pulse {
-
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.3);
-    opacity: .6;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-}
-
-/* =========================
-CONTAINER FULL
-========================= */
-
-.container.full {
-
-  display: block;
-
-  width: 100%;
-
-}
-
-/* =========================
-MAIN
-========================= */
-
-#app {
-
-  width: 100%;
-
-  padding: 30px;
-
-}
-
-/* =========================
-TOP ACTIONS
-========================= */
-
-.top-actions {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-}
-
-/* =========================
-LOGOUT
-========================= */
-
-.logout {
-
-  text-decoration: none;
-
-  background: #ef4444;
-
-  color: rgb(8, 6, 6);
-
-  padding: 10px 16px;
-
-  border-radius: 10px;
-
-  font-weight: bold;
-
-  transition: 0.3s;
-
-}
-
-.logout:hover {
-
-  background: #dc2626;
-
-  transform: translateY(-2px);
 
 }
