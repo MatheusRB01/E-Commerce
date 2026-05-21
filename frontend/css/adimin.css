@@ -249,7 +249,7 @@ form{
 
 form input{
 
-  width:100%;
+  width:50%;
 
   height:50px;
 
@@ -294,7 +294,7 @@ form textarea:focus{
 
 form button{
 
-  width:100%;
+  width:50%;
 
   height:50px;
 
@@ -326,7 +326,7 @@ UPLOAD
 
 .file-upload{
 
-  width:100%;
+  width:50%;
 
   border:2px dashed #cbd5e1;
 
@@ -354,7 +354,7 @@ PREVIEW
 
 #preview-container{
 
-  width:100%;
+  width:50%;
 
   display:flex;
 
@@ -364,7 +364,7 @@ PREVIEW
 
 #preview-img{
 
-  width:100%;
+  width:50%;
 
   height:320px;
 
